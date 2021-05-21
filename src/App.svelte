@@ -1,30 +1,42 @@
 <script>
-	export let name;
+    let todos = [
+        { done:false, text: 'eat' },
+        { done:false, text: 'sleep' },
+        { done:false, text: 'code' },
+        { done:false, text: 'repeat' }
+    ];
+
+    function toggleDone(t) {
+        todos = todos.map(todo => {
+            if(todo === t) return { done: !t.done, text: t.text };
+            return todo;
+        });
+    }
+
+    let hideDone = false;
+
+    $:showing = filtered.length
+
+    $:filtered = hideDone
+        ? todos.filter(todo => !todo.done)
+        : todos;
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
+<label>
+    <input
+    type="checkbox"
+    bind:checked={hideDone}
+    >
+    
+    hide done
+</label>
 
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
+<p>showing {showing} of {todos.length}</p>
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
+<ul>
+    {#each filtered as todo}
+    <li on:click={toggleDone(todo)}>
+        {todo.done ? '👍' : ''} {todo.text}
+    </li>
+    {/each}
+</ul>
