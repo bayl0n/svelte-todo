@@ -1,4 +1,5 @@
 <script>
+    import { fade, fly } from 'svelte/transition';
     let todos = [
         { done:false, text: 'eat' },
         { done:false, text: 'sleep' },
@@ -35,7 +36,7 @@
 
 <ul>
     {#each filtered as todo}
-    <li on:click={toggleDone(todo)}>
+    <li on:click={toggleDone(todo)} in:fade>
         {todo.done ? '👍' : ''} {todo.text}
     </li>
     {/each}
