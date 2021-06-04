@@ -1,33 +1,27 @@
 <script>
     let todos = [
-        { done:false, text: 'eat' },
-        { done:false, text: 'sleep' },
-        { done:false, text: 'code' },
-        { done:false, text: 'repeat' }
+        { done: false, text: "eat" },
+        { done: false, text: "sleep" },
+        { done: false, text: "code" },
+        { done: false, text: "repeat" },
     ];
 
     function toggleDone(t) {
-        todos = todos.map(todo => {
-            if(todo === t) return { done: !t.done, text: t.text };
+        todos = todos.map((todo) => {
+            if (todo === t) return { done: !t.done, text: t.text };
             return todo;
         });
     }
 
     let hideDone = false;
 
-    $:showing = filtered.length
+    $: showing = filtered.length;
 
-    $:filtered = hideDone
-        ? todos.filter(todo => !todo.done)
-        : todos;
+    $: filtered = hideDone ? todos.filter((todo) => !todo.done) : todos;
 </script>
 
 <label>
-    <input
-    type="checkbox"
-    bind:checked={hideDone}
-    >
-    
+    <input type="checkbox" bind:checked={hideDone} />
     hide done
 </label>
 
@@ -35,8 +29,9 @@
 
 <ul>
     {#each filtered as todo}
-    <li on:click={toggleDone(todo)}>
-        {todo.done ? '👍' : ''} {todo.text}
-    </li>
+        <li on:click={toggleDone(todo)}>
+            {todo.done ? "👍" : ""}
+            {todo.text}
+        </li>
     {/each}
 </ul>
